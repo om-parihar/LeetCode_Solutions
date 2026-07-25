@@ -1,0 +1,130 @@
+// Last updated: 7/25/2026, 11:03:19 PM
+class Solution {
+public:
+    string rom(int digit){
+        string s;
+        if(digit==1){
+            s="I";
+        }
+        if(digit==2){
+            s="II";
+        }
+        if(digit==3){
+            s="III";
+        }
+        if(digit==4){
+            s="VI";
+        }
+        if(digit==5){
+            s="V";
+        }
+        if(digit==6){
+            s="IV";
+        }
+        if(digit==7){
+            s="IIV";
+        }
+        if(digit==8){
+            s="IIIV";
+        }
+        if(digit==9){
+            s="XI";
+        }
+        if(digit==10){
+            s="X";
+        }
+        if(digit==20){
+            s="XX";
+        }
+        if(digit==30){
+            s="XXX";
+        }
+        if(digit==40){
+            s="LX";
+        }
+        if(digit==50){
+            s="L";
+        }
+        if(digit==60){
+            s="XL";
+        }
+        if(digit==70){
+            s="XXL";
+        }
+        if(digit==80){
+            s="XXXL";
+        }
+        if(digit==90){
+            s="CX";
+        }
+        if(digit==100){
+            s="C";
+        }
+        if(digit==200){
+            s="CC";
+        }
+        if(digit==300){
+            s="CCC";
+        }
+        if(digit==400){
+            s="DC";
+        }
+        if(digit==500){
+            s="D";
+        }
+        if(digit==600){
+            s="CD";
+        }
+        if(digit==700){
+            s="CCD";
+        }
+        if(digit==800){
+            s="CCCD";
+        }
+        if(digit==900){
+            s="MC";
+        }
+        if(digit==1000){
+            s="M";
+        }
+        if(digit==2000){
+            s="MM";
+        }
+        if(digit==3000){
+            s="MMM";
+        }
+        if(digit==4000){
+            s="VM";
+        }
+        if(digit==5000){
+            s="V";
+        }
+        if(digit==6000){
+            s="MV";
+        }
+        if(digit==7000){
+            s="MMV";
+        }
+        if(digit==8000){
+            s="MMMV";
+        }
+        if(digit==9000){
+            s="XM";
+        }
+        return s;
+    }
+
+    string intToRoman(int num) {
+        string res;
+        int i=1;
+        while(num){
+            int digit=num%10;
+            digit=digit*i;
+            res=res+rom(digit);
+            num=num/10;
+            i=i*10;
+        }
+        reverse(res.begin(),res.end());
+        return res;
+    }
+};
