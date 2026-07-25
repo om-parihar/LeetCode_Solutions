@@ -1,17 +1,20 @@
-// Last updated: 7/25/2026, 11:09:00 PM
+// Last updated: 7/25/2026, 11:15:54 PM
 1class Solution {
 2public:
 3    int maxProduct(int n) {
-4        int mx=INT_MIN;
-5        string a=to_string(n);
-6        for(int i=0;i<a.size();i++){
-7            for(int j=i+1;j<a.size();j++){
-8                int m=((a[i]-'0')*(a[j]-'0'));
-9                if(m>mx){
-10                    mx=m;
-11                }
-12            }
-13        }
-14        return mx;
-15    }
-16};
+4        int fLar=0;
+5        int sLar;
+6        while(n){
+7            int num=n%10;
+8            if(num>=fLar){
+9                sLar=fLar;
+10                fLar=num;
+11            }
+12            else if(num>sLar){
+13                sLar=num;
+14            }
+15            n=n/10;
+16        }
+17        return sLar*fLar;
+18    }
+19};
