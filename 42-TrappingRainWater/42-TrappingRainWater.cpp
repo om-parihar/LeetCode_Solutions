@@ -1,0 +1,34 @@
+// Last updated: 7/25/2026, 11:02:47 PM
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int n=height.size();
+        int Lmax=0;
+        int Rmax=0;
+        int l=0,r=n-1;
+        int ans=0;
+        while(l<r){
+            if(height[l]<=height[r]){
+                if(Lmax>height[l]){
+                    ans+=Lmax-height[l];
+                    l++;
+                }
+                else{
+                    Lmax=height[l];
+                    l++;
+                }
+            }
+            else{
+                if(Rmax>height[r]){
+                    ans+=Rmax-height[r];
+                    r--;
+                }
+                else{
+                    Rmax=height[r];
+                    r--;
+                }
+            }
+        }
+        return ans;
+    }
+};
