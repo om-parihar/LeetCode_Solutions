@@ -1,4 +1,4 @@
-// Last updated: 7/29/2026, 12:06:34 PM
+// Last updated: 7/29/2026, 12:45:20 PM
 1/**
 2 * Definition for singly-linked list.
 3 * struct ListNode {
@@ -9,32 +9,38 @@
 8 *     ListNode(int x, ListNode *next) : val(x), next(next) {}
 9 * };
 10 */
-11class Solution {
-12public:
-13    ListNode* insertionSortList(ListNode* head) {
-14        vector<int> temp;
-15        ListNode* t=head;
-16        while(t){
-17            temp.push_back(t->val);
-18            t=t->next;
-19        }
-20        for (int i = 1; i < temp.size(); i++) {
-21            int key = temp[i];
-22            int j = i - 1;
+11
+12class Solution {
+13public:
+14    ListNode* insertionSortList(ListNode* head) {
+15        if (!head || !head->next)
+16            return head;
+17
+18        ListNode dummy(0);
+19        dummy.next = head;
+20
+21        ListNode* prev = head;
+22        ListNode* curr = head->next;
 23
-24            while (j >= 0 && temp[j] > key) {
-25                temp[j + 1] = temp[j];
-26                j--;
-27        }
-28
-29        temp[j + 1] = key;
-30    }
-31        ListNode* root=new ListNode(0);
-32        ListNode* a=root;
-33        for(int i=0;i<temp.size();i++){
-34            a->next=new ListNode(temp[i]);
-35            a=a->next;
-36        }
-37        return root->next;
-38    }
-39};
+24        while (curr) {
+25
+26            if (curr->val >= prev->val) {
+27                prev = curr;
+28                curr = curr->next;
+29                continue;
+30            }
+31            prev->next = curr->next;
+32
+33            ListNode* temp = &dummy;
+34            while (temp->next && temp->next->val < curr->val) {
+35                temp = temp->next;
+36            }
+37            curr->next = temp->next;
+38            temp->next = curr;
+39
+40            curr = prev->next;
+41        }
+42
+43        return dummy.next;
+44    }
+45};
