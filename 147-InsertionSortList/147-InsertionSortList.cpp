@@ -1,4 +1,4 @@
-// Last updated: 7/29/2026, 12:05:29 PM
+// Last updated: 7/29/2026, 12:06:34 PM
 1/**
 2 * Definition for singly-linked list.
 3 * struct ListNode {
@@ -18,21 +18,23 @@
 17            temp.push_back(t->val);
 18            t=t->next;
 19        }
-20        for(int i=0;i<temp.size();i++){
-21            int minIndex=i;
-22            for(int j=i+1;j<temp.size();j++){
-23                if(temp[minIndex]>temp[j]){
-24                    minIndex=j;
-25                }
-26            }
-27            swap(temp[minIndex],temp[i]);
-28        }
-29        ListNode* root=new ListNode(0);
-30        ListNode* a=root;
-31        for(int i=0;i<temp.size();i++){
-32            a->next=new ListNode(temp[i]);
-33            a=a->next;
-34        }
-35        return root->next;
-36    }
-37};
+20        for (int i = 1; i < temp.size(); i++) {
+21            int key = temp[i];
+22            int j = i - 1;
+23
+24            while (j >= 0 && temp[j] > key) {
+25                temp[j + 1] = temp[j];
+26                j--;
+27        }
+28
+29        temp[j + 1] = key;
+30    }
+31        ListNode* root=new ListNode(0);
+32        ListNode* a=root;
+33        for(int i=0;i<temp.size();i++){
+34            a->next=new ListNode(temp[i]);
+35            a=a->next;
+36        }
+37        return root->next;
+38    }
+39};
