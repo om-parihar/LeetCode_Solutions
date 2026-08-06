@@ -1,5 +1,5 @@
-// Last updated: 8/6/2026, 12:24:50 PM
-1class Solution {
+// Last updated: 8/6/2026, 2:04:22 PM
+1class Solution1 {
 2public:
 3    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
 4        vector<vector<pair<int,int>>> edges(n);
@@ -32,3 +32,32 @@
 31        return (ans == 1e9) ? -1 : ans;
 32    }
 33};
+34class Solution {
+35public:
+36    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+37        vector<vector<pair<int,int>>> edges(n);
+38        for(auto it : flights) {
+39            edges[it[0]].push_back({it[1],it[2]});
+40        }
+41        vector<int> vis(n,1e7);
+42        queue<pair<int,pair<int,int>>> q;
+43        q.push({0,{src,0}});
+44        vis[src]=0;
+45        while(!q.empty()){
+46            int dis=q.front().first;
+47            int node=q.front().second.first;
+48            int cost=q.front().second.second;
+49            q.pop();
+50            if(dis>k) continue;
+51            for(auto it: edges[node]){
+52                int adjnode=it.first;
+53                int adjcost=it.second;
+54                if(cost+adjcost<vis[adjnode]){
+55                    vis[adjnode]=cost+adjcost;
+56                    q.push({dis+1,{adjnode,cost+adjcost}});
+57                }
+58            }
+59        }
+60        return (vis[dst]==1e7)? -1: vis[dst];
+61    }
+62};
