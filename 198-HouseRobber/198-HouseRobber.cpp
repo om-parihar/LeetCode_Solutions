@@ -1,17 +1,18 @@
-// Last updated: 7/25/2026, 11:01:00 PM
-class Solution {
-public:
-    int rob(vector<int>& nums) {
-        int n=nums.size();
-        if(n==0) return 0;
-        if(n==1) return nums[0];
-        int pre=0;
-        int suf=nums[0];
-        for(int i=1;i<n;i++){
-            int curr=max(nums[i]+pre,suf);
-            pre=suf;
-            suf=curr;
-        }
-        return suf;
-    }
-};
+// Last updated: 8/8/2026, 3:23:37 PM
+1class Solution {
+2public:
+3    int fun(int idx, vector<int> nums,vector<int> &dp){
+4        if(idx==0) return nums[idx];
+5        if(idx<0) return 0;
+6        if(dp[idx]!=-1) return dp[idx];
+7        int pick=nums[idx]+fun(idx-2,nums,dp);
+8        int notpick=0+fun(idx-1,nums,dp);
+9        return dp[idx]=max(pick,notpick);
+10    }
+11    int rob(vector<int>& nums) {
+12        int n=nums.size();
+13        vector<int> dp(n+1,-1);
+14        int cnt=fun(n-1,nums,dp);
+15        return cnt;
+16    }
+17};
