@@ -1,4 +1,4 @@
-// Last updated: 8/8/2026, 3:47:52 PM
+// Last updated: 8/8/2026, 3:50:18 PM
 1class Solution1 {
 2public:
 3    int fun(int idx, vector<int> nums,vector<int> &dp){
@@ -17,7 +17,7 @@
 16    }
 17};
 18
-19class Solution {
+19class Solution2 {
 20public:
 21    int rob(vector<int>& nums) {
 22        int n=nums.size();
@@ -33,3 +33,22 @@
 32        return dp[n-1];
 33    }
 34};
+35
+36class Solution {
+37public:
+38    int rob(vector<int>& nums) {
+39        int n=nums.size();
+40        vector<int> dp(n+1);
+41        if(n==1) return nums[0];
+42        int prev2=nums[0];
+43        int prev=max(nums[0],nums[1]);
+44        for(int i=2;i<n;i++){
+45            int take=nums[i]+prev2;
+46            int notake=0+prev;
+47            int curr=max(take,notake);
+48            prev2=prev;
+49            prev=curr;
+50        }
+51        return prev;
+52    }
+53};
