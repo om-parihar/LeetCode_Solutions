@@ -1,4 +1,4 @@
-// Last updated: 8/12/2026, 9:50:11 AM
+// Last updated: 8/13/2026, 2:26:50 PM
 1/**
 2 * Definition for a binary tree node.
 3 * struct TreeNode {
@@ -10,49 +10,93 @@
 9 *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 10 * };
 11 */
-12class Solution {
-13public:
-14    int sumNumbers(TreeNode* root) {
-15        stack<pair<TreeNode*,int>> st;
-16        st.push({root,0});
+12
+13// Morris Traversal
+14class Solution {
+15public:
+16    int sumNumbers(TreeNode* root) {
 17        int sum=0;
-18        while(!st.empty()){
-19            auto node=st.top().first;
-20            int curr=st.top().second;
-21            st.pop();
-22            curr=curr*10+node->val;
-23            if(!node->left && !node->right){
-24                sum+=curr;
-25            }
-26            if(node->left){
-27                st.push({node->left,curr});
-28            }
-29            if(node->right){
-30                st.push({node->right,curr});
-31            }
-32        }
-33        return sum;
-34    }
-35};
-36
-37class Solution1 {
-38public:
-39    void trav(TreeNode* root, int &ans, int sum){
-40        if(root==NULL){
-41            return;
-42        }
-43        sum=sum*10+root->val;
-44        if(!root->left && !root->right){
-45            ans+=sum;
-46            return;
-47        }
-48        trav(root->left,ans,sum);
-49        trav(root->right,ans,sum);
-50    }
-51    int sumNumbers(TreeNode* root) {
-52        int ans=0;
-53        int sum=0;
-54        trav(root,ans,sum);
-55        return ans;
-56    }
-57};
+18        int currsum=0;
+19        while(root!=NULL){
+20            if(root->left!=NULL){
+21                TreeNode* node=root->left;
+22                int steps=1;
+23                while(node->right && node->right!=root){
+24                    node=node->right;
+25                    steps++;
+26                }
+27                if(node->right==NULL){
+28                    node->right=root;
+29                    currsum=currsum*10+root->val;
+30                    root=root->left;
+31                }
+32                else{
+33                    node->right=NULL;
+34                    if(node->left==NULL){
+35                        sum+=currsum;
+36                    }
+37                    while(steps){
+38                        currsum=currsum/10;
+39                        steps--;
+40                    }
+41                    root=root->right;
+42                }
+43            }
+44            else{
+45                currsum=currsum*10+root->val;
+46                if(root->right==NULL){
+47                    sum+=currsum;
+48                }
+49                root=root->right;
+50            }
+51        }
+52        return sum;
+53    }
+54};
+55
+56class Solution2 {
+57public:
+58    int sumNumbers(TreeNode* root) {
+59        stack<pair<TreeNode*,int>> st;
+60        st.push({root,0});
+61        int sum=0;
+62        while(!st.empty()){
+63            auto node=st.top().first;
+64            int curr=st.top().second;
+65            st.pop();
+66            curr=curr*10+node->val;
+67            if(!node->left && !node->right){
+68                sum+=curr;
+69            }
+70            if(node->left){
+71                st.push({node->left,curr});
+72            }
+73            if(node->right){
+74                st.push({node->right,curr});
+75            }
+76        }
+77        return sum;
+78    }
+79};
+80
+81class Solution1 {
+82public:
+83    void trav(TreeNode* root, int &ans, int sum){
+84        if(root==NULL){
+85            return;
+86        }
+87        sum=sum*10+root->val;
+88        if(!root->left && !root->right){
+89            ans+=sum;
+90            return;
+91        }
+92        trav(root->left,ans,sum);
+93        trav(root->right,ans,sum);
+94    }
+95    int sumNumbers(TreeNode* root) {
+96        int ans=0;
+97        int sum=0;
+98        trav(root,ans,sum);
+99        return ans;
+100    }
+101};
