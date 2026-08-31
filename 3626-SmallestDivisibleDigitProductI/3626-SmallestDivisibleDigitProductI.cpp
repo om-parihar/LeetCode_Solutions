@@ -1,0 +1,19 @@
+// Last updated: 8/31/2026, 4:25:10 PM
+class Solution {
+public:
+    int smallestNumber(int n, int t) {
+        while(true){
+            int x=n;
+            int prod=1;
+            while(x>0){
+                prod*=(x%10);
+                x=x/10;
+            }
+            if(prod%t==0){
+                return n;
+            }
+            n++;
+        }
+        return 0;
+    }
+};
